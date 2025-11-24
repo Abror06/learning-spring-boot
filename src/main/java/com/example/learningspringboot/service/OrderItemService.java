@@ -67,12 +67,11 @@ public class OrderItemService {
 
     private OrderItem persist(OrderItem orderItem, Long orderId, Long productId, Long quantity) {
         checkQuantity(quantity);
+
         Product product = productService.findById(productId);
         Order order = orderService.findById(orderId);
 
-        orderItem.setOrder(order);
-        orderItem.setProduct(product);
-        orderItem.setQuantity(quantity);
+        orderItemMapper.updateEntity(orderItem, quantity, order, product);
 
         return orderItemRepository.save(orderItem);
     }

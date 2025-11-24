@@ -4,7 +4,6 @@ import com.example.learningspringboot.dto.OrderCreateDto;
 import com.example.learningspringboot.dto.OrderDto;
 import com.example.learningspringboot.model.Order;
 import com.example.learningspringboot.model.User;
-import com.example.learningspringboot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

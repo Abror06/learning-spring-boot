@@ -66,12 +66,4 @@ public class OrderService {
         User user = userService.findById(userId);
         return orderRepository.findByUser(user);
     }
-
-    private void toSave(OrderCreateDto dto, Order order) {
-        User user = userService.findById(dto.getUserId());
-
-        order.setUser(user);
-        order.setPrice(dto.getPrice());
-        order.setOrderDate(LocalDateTime.now());
-    }
 }

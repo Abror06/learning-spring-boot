@@ -10,7 +10,6 @@ import com.example.learningspringboot.model.Category;
 import com.example.learningspringboot.model.Product;
 import com.example.learningspringboot.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -3,14 +3,10 @@ package com.example.learningspringboot.controller;
 
 import com.example.learningspringboot.dto.OrderCreateDto;
 import com.example.learningspringboot.dto.OrderDto;
-import com.example.learningspringboot.dto.OrderItemDto;
-import com.example.learningspringboot.model.Order;
-import com.example.learningspringboot.model.User;
 import com.example.learningspringboot.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

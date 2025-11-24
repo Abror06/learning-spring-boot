@@ -25,8 +25,7 @@ public class CategoryService {
     }
 
     public Category findById(Long categoryId) {
-        Optional<Category> optionalCategory =
-                categoryRepository.findById(categoryId);
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
 
         if (optionalCategory.isPresent()) {
             return optionalCategory.get();
@@ -35,14 +34,14 @@ public class CategoryService {
     }
 
     public CategoryDto findCategoryDtoById(Long categoryId) {
-    return categoryMapper.toDto(findById(categoryId));
+        return categoryMapper.toDto(findById(categoryId));
     }
 
     public CategoryDto createCategory(CategoryCreateDto dto) {
         checkName(dto.getName());
 
         Category category = new Category();
-        category.setName(dto.getName());
+        categoryMapper.toEntity(dto, category);
         categoryRepository.save(category);
 
         return categoryMapper.toDto(category);
