@@ -23,7 +23,9 @@ public class CategoryMapper {
         return categories.stream().map(this::toDto).toList();
     }
 
-    public void toEntity(CategoryCreateDto dto, Category category) {
+    public Category  toEntity(CategoryCreateDto dto) {
+        Category category = new Category();
         category.setName(dto.getName());
+        return category;
     }
 }

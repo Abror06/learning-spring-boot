@@ -40,8 +40,7 @@ public class CategoryService {
     public CategoryDto createCategory(CategoryCreateDto dto) {
         checkName(dto.getName());
 
-        Category category = new Category();
-        categoryMapper.toEntity(dto, category);
+        Category category = categoryMapper.toEntity(dto);
         categoryRepository.save(category);
 
         return categoryMapper.toDto(category);
