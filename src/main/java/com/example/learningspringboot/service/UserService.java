@@ -44,8 +44,8 @@ public class UserService {
     public UserDto create(UserCreateDto dto) {
         phoneCheck(dto.getPhone());
 
-        User user = userMapper.toEntity(dto);
-        user.setFullname(dto.getFullName());
+        User user = userMapper.toEntity(dto, LocalDateTime.now());
+        user.setFullName(dto.getFullName());
         user.setPhone(dto.getPhone());
         user.setCreatedAt(LocalDateTime.now());
         usersRepository.save(user);
@@ -63,7 +63,7 @@ public class UserService {
 
         UserDto userDto = new UserDto();
         if (fullName != null) {
-            userDto.setFullname(fullName);
+            userDto.setFullName(fullName);
         }
         if (phone != null) {
             phoneCheckByUserId(phone, id);

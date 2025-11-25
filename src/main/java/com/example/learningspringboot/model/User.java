@@ -14,8 +14,8 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "fullname")
-    private String fullname;
+    @Column(name = "fullName")
+    private String fullName;
 
     @Column(name = "phone" , unique = true)
     private String phone;

@@ -6,20 +6,24 @@ import com.example.learningspringboot.model.OrderItem;
 import com.example.learningspringboot.model.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface OrderItemMapper {
-
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "orderId", source = "order.id")
+    @Mapping(target = "productId", source = "product.id")
+    @Mapping(target = "quantity", source = "quantity")
     OrderItemDto toDto(OrderItem orderItem);
 
     List<OrderItemDto> toDto(List<OrderItem> orderItems);
 
-    //orderId ga qanday berishni bilmadim orderdan idsini olib
-    @Mapping(target = "order", source = "orderId")
-    @Mapping(target = "product.getId()", source = "productId")
+    @Mapping(target = "order", source = "order")
+    @Mapping(target = "product", source = "product")
     @Mapping(target = "quantity", source = "quantity")
-    void updateEntity(OrderItem orderItem, Long quantity, Order order, Product product);
+    @Mapping(target = "id", ignore = true)
+    void updateEntity(@MappingTarget OrderItem orderItem, Long quantity, Order order, Product product);
 }

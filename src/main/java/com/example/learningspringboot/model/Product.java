@@ -19,7 +19,7 @@ public class Product {
     private Long quantity;
 
     @Column(name = "price_per_one")
-    private Long pricePreOne;
+    private Long pricePerOne;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)

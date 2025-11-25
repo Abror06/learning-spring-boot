@@ -1,6 +1,5 @@
 package com.example.learningspringboot.dto;
 
-import com.example.learningspringboot.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

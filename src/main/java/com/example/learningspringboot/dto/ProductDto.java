@@ -14,7 +14,7 @@ public class ProductDto {
 
     private Long quantity;
 
-    private Long pricePreOne;
+    private Long pricePerOne;
 
     private CategoryDto category;
 }
