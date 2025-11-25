@@ -19,7 +19,7 @@ public interface OrderItemMapper {
 
     //orderId ga qanday berishni bilmadim orderdan idsini olib
     @Mapping(target = "order", source = "orderId")
-    @Mapping(target = "product", source = "productId")
+    @Mapping(target = "product.getId()", source = "productId")
     @Mapping(target = "quantity", source = "quantity")
     void updateEntity(OrderItem orderItem, Long quantity, Order order, Product product);
 }
