@@ -1,14 +1,10 @@
 package com.example.learningspringboot.mapper;
 
-import com.example.learningspringboot.dto.ProductCreateDto;
-import com.example.learningspringboot.dto.ProductDto;
+
 import com.example.learningspringboot.dto.UserCreateDto;
 import com.example.learningspringboot.dto.UserDto;
-import com.example.learningspringboot.model.Category;
-import com.example.learningspringboot.model.Product;
 import com.example.learningspringboot.model.User;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
