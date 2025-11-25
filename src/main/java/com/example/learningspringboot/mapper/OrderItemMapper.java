@@ -4,31 +4,22 @@ import com.example.learningspringboot.dto.OrderItemDto;
 import com.example.learningspringboot.model.Order;
 import com.example.learningspringboot.model.OrderItem;
 import com.example.learningspringboot.model.Product;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
 
 import java.util.List;
 
-@Component
-@RequiredArgsConstructor
-public class OrderItemMapper {
-    public OrderItemDto toDto(OrderItem orderItem) {
-        OrderItemDto orderItemDto = new OrderItemDto();
+@Mapper(componentModel = "spring")
+public interface OrderItemMapper {
 
-        orderItemDto.setId(orderItem.getId());
-        orderItemDto.setOrderId(orderItem.getOrder().getId());
-        orderItemDto.setProductId(orderItem.getProduct().getId());
-        orderItemDto.setQuantity(orderItem.getQuantity());
-        return orderItemDto;
-    }
+    OrderItemDto toDto(OrderItem orderItem);
 
-    public List<OrderItemDto> toDto(List<OrderItem> orderItems) {
-        return orderItems.stream().map(this::toDto).toList();
-    }
+    List<OrderItemDto> toDto(List<OrderItem> orderItems);
 
-    public void updateEntity(OrderItem orderItem, Long quantity, Order order, Product product) {
-        orderItem.setOrder(order);
-        orderItem.setProduct(product);
-        orderItem.setQuantity(quantity);
-    }
+    //orderId ga qanday berishni bilmadim orderdan idsini olib
+    @Mapping(target = "order", source = "orderId")
+    @Mapping(target = "product", source = "productId")
+    @Mapping(target = "quantity", source = "quantity")
+    void updateEntity(OrderItem orderItem, Long quantity, Order order, Product product);
 }
