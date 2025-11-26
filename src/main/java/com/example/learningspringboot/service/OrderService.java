@@ -56,10 +56,10 @@ public class OrderService {
         orderRepository.delete(order);
     }
 
-    public Order updateById(Long orderId, Long price) {
-        Order order = findById(orderId);
-        order.setPrice(price);
-        return order;
+    public OrderDto updateById(Long orderId, Long price) {
+        OrderDto orderDto = findOrderDtoById(orderId);
+        orderDto.setPrice(price);
+        return orderDto;
     }
 
 

@@ -3,13 +3,9 @@ package com.example.learningspringboot.controller;
 
 import com.example.learningspringboot.dto.OrderCreateDto;
 import com.example.learningspringboot.dto.OrderDto;
-import com.example.learningspringboot.dto.OrderItemDto;
-import com.example.learningspringboot.model.Order;
-import com.example.learningspringboot.model.Payment;
 import com.example.learningspringboot.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,8 +43,8 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable(value = "id") Long id, @RequestParam(value = "price", required = false) Long price) {
-        Order order = orderService.updateById(id, price);
+    public ResponseEntity<OrderDto> updateOrder(@PathVariable(value = "id") Long id, @RequestParam(value = "price", required = false) Long price) {
+        OrderDto order = orderService.updateById(id, price);
         return ResponseEntity.ok(order);
     }
 }

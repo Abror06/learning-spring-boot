@@ -45,9 +45,6 @@ public class UserService {
         phoneCheck(dto.getPhone());
 
         User user = userMapper.toEntity(dto, LocalDateTime.now());
-        user.setFullName(dto.getFullName());
-        user.setPhone(dto.getPhone());
-        user.setCreatedAt(LocalDateTime.now());
         usersRepository.save(user);
         return userMapper.toDto(user);
     }
