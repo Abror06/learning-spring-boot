@@ -3,29 +3,21 @@ package com.example.learningspringboot.mapper;
 import com.example.learningspringboot.dto.CategoryCreateDto;
 import com.example.learningspringboot.dto.CategoryDto;
 import com.example.learningspringboot.model.Category;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Component
-@RequiredArgsConstructor
-public class CategoryMapper {
-    public CategoryDto toDto(Category category) {
-        CategoryDto categoryDto = new CategoryDto();
+@Mapper(componentModel = "spring")
+public interface CategoryMapper {
 
-        category.setCategoryId(category.getCategoryId());
-        category.setName(category.getName());
-        return categoryDto;
-    }
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    CategoryDto toDto(Category category);
 
-    public List<CategoryDto> toDto(List<Category> categories){
-        return categories.stream().map(this::toDto).toList();
-    }
+    List<CategoryDto> toDto(List<Category> categories);
 
-    public Category  toEntity(CategoryCreateDto dto) {
-        Category category = new Category();
-        category.setName(dto.getName());
-        return category;
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "name")
+    Category toEntity(CategoryCreateDto dto);
 }

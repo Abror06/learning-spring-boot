@@ -17,7 +17,7 @@ public class ProductCreateDto {
 
     @NotNull
     @Positive
-    private Long pricePreOne;
+    private Long pricePerOne;
 
     @NotNull(message = "Category ID is required")
     @Positive(message = "Category ID must be positive")

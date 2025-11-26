@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public class OrderService {
     public OrderDto createOrder(OrderCreateDto dto) {
 
         User user = userService.findById(dto.getUserId());
-        Order order = orderMapper.toEntity(dto, user);
+        Order order = orderMapper.toEntity(dto, user, LocalDateTime.now());
 
          orderRepository.save(order);
          return orderMapper.toDto(order);
@@ -55,10 +56,10 @@ public class OrderService {
         orderRepository.delete(order);
     }
 
-    public Order updateById(Long orderId, Long price) {
-        Order order = findById(orderId);
-        order.setPrice(price);
-        return order;
+    public OrderDto updateById(Long orderId, Long price) {
+        OrderDto orderDto = findOrderDtoById(orderId);
+        orderDto.setPrice(price);
+        return orderDto;
     }
 
 

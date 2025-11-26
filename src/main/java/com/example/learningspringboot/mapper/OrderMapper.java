@@ -1,41 +1,30 @@
 package com.example.learningspringboot.mapper;
-;
+
 import com.example.learningspringboot.dto.OrderCreateDto;
 import com.example.learningspringboot.dto.OrderDto;
 import com.example.learningspringboot.model.Order;
 import com.example.learningspringboot.model.User;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Component
-@RequiredArgsConstructor
-public class OrderMapper {
+@Mapper(componentModel = "spring")
+public interface OrderMapper {
 
-    public OrderDto toDto(Order order) {
-        OrderDto orderDto = new OrderDto();
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "orderDate", source = "orderDate")
+    @Mapping(target = "price", source = "price")
+    OrderDto toDto(Order order);
 
-        orderDto.setId(order.getId());
-        orderDto.setUserId(order.getUser().getId());
-        orderDto.setOrderDate(order.getOrderDate());
-        orderDto.setPrice(order.getPrice());
+    List<OrderDto> toDto(List<Order> orders);
 
-        return orderDto;
-    }
-
-    public List<OrderDto> toDto(List<Order> orders) {
-        return orders.stream().map(this::toDto).toList();
-    }
-
-    public Order toEntity(OrderCreateDto dto, User user) {
-        Order order = new Order();
-
-        order.setUser(user);
-        order.setPrice(dto.getPrice());
-        order.setOrderDate(LocalDateTime.now());
-
-        return order;
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", source = "user")
+    @Mapping(target = "price", source = "dto.price")
+    @Mapping(target = "orderDate", source = "localDateTime")
+    Order toEntity(OrderCreateDto dto, User user, LocalDateTime localDateTime);
 }

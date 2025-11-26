@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItemCreateDto {
+    
+
     @NotNull(message = "Order ID is required")
     @Positive(message = "Order ID must be positive")
     private Long orderId;

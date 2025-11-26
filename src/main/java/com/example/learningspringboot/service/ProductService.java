@@ -41,7 +41,7 @@ public class ProductService {
 
     public ProductDto createProduct(ProductCreateDto dto) {
         checkQuantity(dto.getQuantity());
-        checkPrice(dto.getPricePreOne());
+        checkPrice(dto.getPricePerOne());
 
         Category category = categoryService.findById(dto.getCategoryId());
 
@@ -62,7 +62,7 @@ public class ProductService {
         checkQuantity(quantity);
         checkPrice(pricePerOne);
 
-        productMapper.toUpdateEntity(productName, pricePerOne, quantity, categoryId, product);
+        productMapper.toUpdateEntity(product, productName, pricePerOne, quantity, categoryId);
         productRepository.save(product);
 
         return productMapper.toDto(product);

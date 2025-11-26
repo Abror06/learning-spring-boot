@@ -41,5 +41,11 @@ public class OrderController {
         orderService.deleteById(id);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderDto> updateOrder(@PathVariable(value = "id") Long id, @RequestParam(value = "price", required = false) Long price) {
+        OrderDto order = orderService.updateById(id, price);
+        return ResponseEntity.ok(order);
+    }
 }
 
