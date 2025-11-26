@@ -33,14 +33,14 @@ public class PaymentController {
 
     @PostMapping
     public ResponseEntity<PaymentDto> createPayment(@RequestBody @Valid PaymentCreateDto dto) {
-        PaymentDto payment = paymentService.createPayment(dto);
-        return new ResponseEntity<>(payment, HttpStatus.CREATED);
+        PaymentDto paymentDto = paymentService.createPayment(dto);
+        return new ResponseEntity<>(paymentDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Payment> updatePayment(@PathVariable(value = "id") Long id, @RequestParam(value = "userId", required = false) Long userId, @RequestParam(value = "orderId", required = false) Long orderId, @RequestParam(value = "amount", required = false) Long amount) {
-        Payment payment = paymentService.updatePayment(id, userId, orderId, amount);
-        return ResponseEntity.ok(payment);
+    public ResponseEntity<PaymentDto> updatePayment(@PathVariable(value = "id") Long id, @RequestParam(value = "userId", required = false) Long userId, @RequestParam(value = "orderId", required = false) Long orderId, @RequestParam(value = "amount", required = false) Long amount) {
+        PaymentDto paymentDto = paymentService.updateById(id, userId, orderId, amount);
+        return ResponseEntity.ok(paymentDto);
     }
 
     @DeleteMapping("/{id}")

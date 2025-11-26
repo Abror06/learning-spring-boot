@@ -4,14 +4,17 @@ import com.example.learningspringboot.dto.OrderCreateDto;
 import com.example.learningspringboot.dto.OrderDto;
 import com.example.learningspringboot.model.Order;
 import com.example.learningspringboot.model.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
+)
 public interface OrderMapper {
 
     @Mapping(target = "id", source = "id")
@@ -27,4 +30,8 @@ public interface OrderMapper {
     @Mapping(target = "price", source = "dto.price")
     @Mapping(target = "orderDate", source = "localDateTime")
     Order toEntity(OrderCreateDto dto, User user, LocalDateTime localDateTime);
+
+    @Mapping(target = "price", source = "price")
+    @Mapping(target = "user", source = "user")
+    void toUpdateEntity(@MappingTarget Order order, Long price, User user);
 }

@@ -13,9 +13,9 @@ public class PaymentDto {
 
     private Long id;
 
-    private UserDto user;
+    private Long userId;
 
-    private OrderDto order;
+    private Long orderId;
 
     private LocalDateTime date;
 

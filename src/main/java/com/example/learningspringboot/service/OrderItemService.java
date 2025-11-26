@@ -47,10 +47,10 @@ public class OrderItemService {
         return orderItemMapper.toDto(orderItem);
     }
 
-    public OrderItem updateOrderItem(Long oiId, Long orderId, Long productId, Long quantity) {
-        OrderItem orderItem = findById(oiId);
+    public OrderItemDto updateOrderItem(Long orderItemId, Long orderId, Long productId, Long quantity) {
+        OrderItem orderItem = findById(orderItemId);
 
-        return persist(orderItem, orderId, productId, quantity);
+        return orderItemMapper.toDto(persist(orderItem, orderId, productId, quantity));
     }
 
     public void deleteById(Long id) {
@@ -60,6 +60,7 @@ public class OrderItemService {
     }
 
     private void checkQuantity(Long quantity) {
+        if (quantity == null) return;
         if (quantity < 1) {
             throw new IllegalQuantityException("Quantity must be more than 0 ");
         }
@@ -68,10 +69,14 @@ public class OrderItemService {
     private OrderItem persist(OrderItem orderItem, Long orderId, Long productId, Long quantity) {
         checkQuantity(quantity);
 
-        Product product = productService.findById(productId);
-        Order order = orderService.findById(orderId);
+        Product product = null;
+        Order order = null;
+        if (productId != null || orderId != null) {
+            product = productService.findById(productId);
+            order = orderService.findById(orderId);
+        }
 
-        orderItemMapper.updateEntity(orderItem, quantity, order, product);
+        orderItemMapper.toUpdateEntity(orderItem, quantity, order, product);
 
         return orderItemRepository.save(orderItem);
     }

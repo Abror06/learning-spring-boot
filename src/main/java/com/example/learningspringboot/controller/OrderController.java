@@ -32,8 +32,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderDto> createOrder(@RequestBody @Valid OrderCreateDto dto) {
-        OrderDto order = orderService.createOrder(dto);
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        OrderDto orderDto = orderService.createOrder(dto);
+        return new ResponseEntity<>(orderDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -43,9 +43,9 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderDto> updateOrder(@PathVariable(value = "id") Long id, @RequestParam(value = "price", required = false) Long price) {
-        OrderDto order = orderService.updateById(id, price);
-        return ResponseEntity.ok(order);
+    public ResponseEntity<OrderDto> updateOrder(@PathVariable(value = "id") Long id, @RequestParam(value = "price", required = false) Long price, @RequestParam(value = "userId", required = false) Long userId) {
+        OrderDto orderDto = orderService.updateById(id, price, userId);
+        return ResponseEntity.ok(orderDto);
     }
 }
 

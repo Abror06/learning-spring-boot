@@ -5,13 +5,15 @@ import com.example.learningspringboot.dto.ProductCreateDto;
 import com.example.learningspringboot.dto.ProductDto;
 import com.example.learningspringboot.model.Category;
 import com.example.learningspringboot.model.Product;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
+)
 public interface ProductMapper {
 
     @Mapping(target = "id", source = "id")

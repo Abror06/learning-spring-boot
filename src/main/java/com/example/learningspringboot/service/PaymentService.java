@@ -11,6 +11,7 @@ import com.example.learningspringboot.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,8 +43,7 @@ public class PaymentService {
 
     public PaymentDto createPayment(PaymentCreateDto dto) {
         Payment payment = new Payment();
-        persist(payment, dto.getUserId(), dto.getOrderId(), dto.getAmount());
-        return paymentMapper.toDto(payment);
+        return paymentMapper.toDto(persist(payment, dto.getUserId(), dto.getOrderId(), dto.getAmount()));
     }
 
     public void delete(Long id) {
@@ -52,9 +52,9 @@ public class PaymentService {
         paymentRepository.delete(payment);
     }
 
-    public Payment updatePayment(Long paymentId, Long userId, Long orderId, Long amount) {
+    public PaymentDto updateById(Long paymentId, Long userId, Long orderId, Long amount) {
         Payment payment = findById(paymentId);
-        return persist(payment, userId, orderId, amount);
+        return paymentMapper.toDto(persistToUpdate(payment, userId, orderId, amount));
     }
 
     private void checkAmount(Long amount) {
@@ -69,7 +69,22 @@ public class PaymentService {
         User user = userService.findById(userId);
         Order order = orderService.findById(orderId);
 
-        paymentMapper.updateEntity(payment, amount, user, order);
+        paymentMapper.toEntity(payment, amount, user, order, LocalDateTime.now());
+
+        return paymentRepository.save(payment);
+    }
+
+    private Payment persistToUpdate(Payment payment, Long userId, Long orderId, Long amount) {
+        checkAmount(amount);
+
+        User user = null;
+        Order order = null;
+
+        if (userId != null || orderId != null) {
+            user = userService.findById(userId);
+            order = orderService.findById(orderId);
+        }
+        paymentMapper.toUpdateEntity(payment, amount, user, order);
 
         return paymentRepository.save(payment);
     }
