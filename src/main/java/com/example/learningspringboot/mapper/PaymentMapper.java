@@ -2,7 +2,11 @@ package com.example.learningspringboot.mapper;
 
 import com.example.learningspringboot.dto.*;
 import com.example.learningspringboot.model.*;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.MappingTarget;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,7 +15,8 @@ import java.util.List;
         componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
-)public interface PaymentMapper {
+)
+public interface PaymentMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "userId", source = "user.id")
     @Mapping(target = "orderId", source = "order.id")
@@ -29,9 +34,8 @@ import java.util.List;
     void toEntity(@MappingTarget Payment payment, Long amount, User user, Order order, LocalDateTime localDateTime);
 
     @Mapping(target = "user", source = "user")
-    @Mapping(target = "order", source = "order")
     @Mapping(target = "amount", source = "amount")
     @Mapping(target = "id", ignore = true)
-    void toUpdateEntity(@MappingTarget Payment payment, Long amount, User user, Order order);
+    void toUpdateEntity(@MappingTarget Payment payment, Long amount, User user);
 
 }

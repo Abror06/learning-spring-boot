@@ -4,7 +4,11 @@ import com.example.learningspringboot.dto.OrderCreateDto;
 import com.example.learningspringboot.dto.OrderDto;
 import com.example.learningspringboot.model.Order;
 import com.example.learningspringboot.model.User;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.MappingTarget;
 
 
 import java.time.LocalDateTime;

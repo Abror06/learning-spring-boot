@@ -2,6 +2,7 @@ package com.example.learningspringboot.service;
 
 import com.example.learningspringboot.dto.PaymentCreateDto;
 import com.example.learningspringboot.dto.PaymentDto;
+import com.example.learningspringboot.dto.PaymentUpdateDto;
 import com.example.learningspringboot.exception.*;
 import com.example.learningspringboot.mapper.PaymentMapper;
 import com.example.learningspringboot.model.Order;
@@ -52,19 +53,11 @@ public class PaymentService {
         paymentRepository.delete(payment);
     }
 
-    public PaymentDto updateById(Long paymentId, Long userId, Long orderId, Long amount) {
-        Payment payment = findById(paymentId);
-        return paymentMapper.toDto(persistToUpdate(payment, userId, orderId, amount));
+    public PaymentDto updateById(Long id, PaymentUpdateDto dto) {
+        Payment payment = findById(id);
+        return paymentMapper.toDto(persistToUpdate(payment, dto.getUserId(), dto.getAmount()));
     }
-
-    private void checkAmount(Long amount) {
-        if (amount < 1) {
-            throw new IllegalAmountException("Amount must be more than 0 ");
-        }
-    }
-
     private Payment persist(Payment payment, Long userId, Long orderId, Long amount) {
-        checkAmount(amount);
 
         User user = userService.findById(userId);
         Order order = orderService.findById(orderId);
@@ -74,18 +67,13 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    private Payment persistToUpdate(Payment payment, Long userId, Long orderId, Long amount) {
-        checkAmount(amount);
-
+    private Payment persistToUpdate(Payment payment, Long userId, Long amount) {
         User user = null;
-        Order order = null;
 
-        if (userId != null || orderId != null) {
+        if (userId != null) {
             user = userService.findById(userId);
-            order = orderService.findById(orderId);
         }
-        paymentMapper.toUpdateEntity(payment, amount, user, order);
-
+        paymentMapper.toUpdateEntity(payment, amount, user);
         return paymentRepository.save(payment);
     }
 }

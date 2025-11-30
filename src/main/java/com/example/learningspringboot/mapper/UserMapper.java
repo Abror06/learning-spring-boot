@@ -4,7 +4,11 @@ package com.example.learningspringboot.mapper;
 import com.example.learningspringboot.dto.UserCreateDto;
 import com.example.learningspringboot.dto.UserDto;
 import com.example.learningspringboot.model.User;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.MappingTarget;
 
 import java.time.LocalDateTime;
 import java.util.List;

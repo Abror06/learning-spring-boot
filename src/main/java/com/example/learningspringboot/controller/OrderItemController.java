@@ -2,6 +2,7 @@ package com.example.learningspringboot.controller;
 
 import com.example.learningspringboot.dto.OrderItemCreateDto;
 import com.example.learningspringboot.dto.OrderItemDto;
+import com.example.learningspringboot.dto.OrderItemUpdateDto;
 import com.example.learningspringboot.service.OrderItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,8 @@ public class OrderItemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderItemDto> updateOrderItem(@PathVariable(value = "id") Long id, @RequestParam(value = "orderId", required = false) Long orderId, @RequestParam(value = "productId", required = false) Long productId, @RequestParam(value = "quantity", required = false) Long quantity) {
-        OrderItemDto orderItemDto = orderItemService.updateOrderItem(id, orderId, productId, quantity);
+    public ResponseEntity<OrderItemDto> updateOrderItem(@PathVariable(value = "id") Long id,@RequestBody @Valid OrderItemUpdateDto dto) {
+        OrderItemDto orderItemDto = orderItemService.updateOrderItem(id, dto);
         return ResponseEntity.ok(orderItemDto);
     }
 

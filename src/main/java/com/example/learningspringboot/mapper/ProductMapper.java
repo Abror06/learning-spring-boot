@@ -5,7 +5,11 @@ import com.example.learningspringboot.dto.ProductCreateDto;
 import com.example.learningspringboot.dto.ProductDto;
 import com.example.learningspringboot.model.Category;
 import com.example.learningspringboot.model.Product;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 

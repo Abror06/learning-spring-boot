@@ -1,7 +1,9 @@
 package com.example.learningspringboot.service;
 
+import com.example.learningspringboot.dto.BaseModifyDto;
 import com.example.learningspringboot.dto.OrderItemCreateDto;
 import com.example.learningspringboot.dto.OrderItemDto;
+import com.example.learningspringboot.dto.OrderItemUpdateDto;
 import com.example.learningspringboot.exception.IllegalQuantityException;
 import com.example.learningspringboot.exception.OrderItemNotFoundException;
 import com.example.learningspringboot.mapper.OrderItemMapper;
@@ -43,14 +45,14 @@ public class OrderItemService {
     public OrderItemDto createOrderItem(OrderItemCreateDto dto) {
         OrderItem orderItem = new OrderItem();
 
-        persist(orderItem, dto.getOrderId(), dto.getProdictId(), dto.getQuantity());
+        persist(orderItem, dto);
         return orderItemMapper.toDto(orderItem);
     }
 
-    public OrderItemDto updateOrderItem(Long orderItemId, Long orderId, Long productId, Long quantity) {
+    public OrderItemDto updateOrderItem(Long orderItemId, OrderItemUpdateDto dto) {
         OrderItem orderItem = findById(orderItemId);
 
-        return orderItemMapper.toDto(persist(orderItem, orderId, productId, quantity));
+        return orderItemMapper.toDto(persist(orderItem, dto));
     }
 
     public void deleteById(Long id) {
@@ -59,24 +61,21 @@ public class OrderItemService {
         orderItemRepository.delete(orderItem);
     }
 
-    private void checkQuantity(Long quantity) {
-        if (quantity == null) return;
-        if (quantity < 1) {
-            throw new IllegalQuantityException("Quantity must be more than 0 ");
-        }
-    }
 
-    private OrderItem persist(OrderItem orderItem, Long orderId, Long productId, Long quantity) {
-        checkQuantity(quantity);
+    private OrderItem persist(OrderItem orderItem, BaseModifyDto dto) {
 
         Product product = null;
         Order order = null;
-        if (productId != null || orderId != null) {
-            product = productService.findById(productId);
-            order = orderService.findById(orderId);
+
+        if (dto.getOrderId() != null) {
+            order = orderService.findById(dto.getOrderId());
         }
 
-        orderItemMapper.toUpdateEntity(orderItem, quantity, order, product);
+        if (dto.getProdictId() != null) {
+            product = productService.findById(dto.getProdictId());
+        }
+
+        orderItemMapper.toUpdateEntity(orderItem, dto.getQuantity(), order, product);
 
         return orderItemRepository.save(orderItem);
     }
