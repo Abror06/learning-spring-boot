@@ -1,6 +1,8 @@
 package com.example.learningspringboot.exception;
 
-public class PaymentNotFoundException extends RuntimeException {
+import org.aspectj.weaver.ast.Not;
+
+public class PaymentNotFoundException extends NotFoundException {
     public PaymentNotFoundException(String message) {
         super(message);
     }
