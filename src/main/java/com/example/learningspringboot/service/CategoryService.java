@@ -52,13 +52,13 @@ public class CategoryService {
         categoryRepository.delete(category);
     }
 
-    public Category updateById(Long id, String name) {
+    public CategoryDto updateById(Long id, String name) {
         Category category = findById(id);
-        if (name != null) {
-            category.setName(name);
-        }
-        return categoryRepository.save(category);
+        categoryMapper.toUpdateEntity(category, name);
+        categoryRepository.save(category);
+        return categoryMapper.toDto(category);
     }
+
 
     private void checkName(String name) {
         if (categoryRepository.existsCategoryByName(name)) {

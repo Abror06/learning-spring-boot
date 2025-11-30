@@ -58,26 +58,14 @@ public class UserService {
     public UserDto updateById(Long id, String fullName, String phone) {
         User user = findById(id);
 
-        UserDto userDto = new UserDto();
-        if (fullName != null) {
-            userDto.setFullName(fullName);
-        }
-        if (phone != null) {
-            phoneCheckByUserId(phone, id);
-            userDto.setPhone(phone);
-        }
+        userMapper.toUpdateEntity(user, id, fullName, phone);
         usersRepository.save(user);
         return userMapper.toDto(user);
     }
 
+
     private void phoneCheck(String phone) {
         if (usersRepository.existsByPhone(phone)) {
-            throw new PhoneUniqueException("someone registered by this phone !");
-        }
-    }
-
-    private void phoneCheckByUserId(String phone, Long id) {
-        if (usersRepository.existsByPhoneAndIdIsNot(phone, id)) {
             throw new PhoneUniqueException("someone registered by this phone !");
         }
     }

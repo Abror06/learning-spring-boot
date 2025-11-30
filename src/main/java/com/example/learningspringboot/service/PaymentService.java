@@ -2,6 +2,7 @@ package com.example.learningspringboot.service;
 
 import com.example.learningspringboot.dto.PaymentCreateDto;
 import com.example.learningspringboot.dto.PaymentDto;
+import com.example.learningspringboot.dto.PaymentUpdateDto;
 import com.example.learningspringboot.exception.*;
 import com.example.learningspringboot.mapper.PaymentMapper;
 import com.example.learningspringboot.model.Order;
@@ -11,6 +12,7 @@ import com.example.learningspringboot.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,8 +44,7 @@ public class PaymentService {
 
     public PaymentDto createPayment(PaymentCreateDto dto) {
         Payment payment = new Payment();
-        persist(payment, dto.getUserId(), dto.getOrderId(), dto.getAmount());
-        return paymentMapper.toDto(payment);
+        return paymentMapper.toDto(persist(payment, dto.getUserId(), dto.getOrderId(), dto.getAmount()));
     }
 
     public void delete(Long id) {
@@ -52,25 +53,27 @@ public class PaymentService {
         paymentRepository.delete(payment);
     }
 
-    public Payment updatePayment(Long paymentId, Long userId, Long orderId, Long amount) {
-        Payment payment = findById(paymentId);
-        return persist(payment, userId, orderId, amount);
+    public PaymentDto updateById(Long id, PaymentUpdateDto dto) {
+        Payment payment = findById(id);
+        return paymentMapper.toDto(persistToUpdate(payment, dto.getUserId(), dto.getAmount()));
     }
-
-    private void checkAmount(Long amount) {
-        if (amount < 1) {
-            throw new IllegalAmountException("Amount must be more than 0 ");
-        }
-    }
-
     private Payment persist(Payment payment, Long userId, Long orderId, Long amount) {
-        checkAmount(amount);
 
         User user = userService.findById(userId);
         Order order = orderService.findById(orderId);
 
-        paymentMapper.updateEntity(payment, amount, user, order);
+        paymentMapper.toEntity(payment, amount, user, order, LocalDateTime.now());
 
+        return paymentRepository.save(payment);
+    }
+
+    private Payment persistToUpdate(Payment payment, Long userId, Long amount) {
+        User user = null;
+
+        if (userId != null) {
+            user = userService.findById(userId);
+        }
+        paymentMapper.toUpdateEntity(payment, amount, user);
         return paymentRepository.save(payment);
     }
 }

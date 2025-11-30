@@ -31,14 +31,14 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserCreateDto dto) {
-        UserDto user = userService.create(dto);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        UserDto userDto = userService.create(dto);
+        return new ResponseEntity<>(userDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable(value = "id") Long id, @RequestParam(value = "fullName", required = false) String fullName, @RequestParam(value = "phone", required = false) String phone) {
-        UserDto user = userService.updateById(id, fullName, phone);
-        return ResponseEntity.ok(user);
+        UserDto userDto = userService.updateById(id, fullName, phone);
+        return ResponseEntity.ok(userDto);
     }
 
     @DeleteMapping("/{id}")

@@ -31,14 +31,18 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductDto> createProduct(@RequestBody @Valid ProductCreateDto dto){
-        ProductDto product = productService.createProduct(dto);
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+        ProductDto productDto = productService.createProduct(dto);
+        return new ResponseEntity<>(productDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable(value = "id") Long id, @RequestParam(value = "productName", required = false) String productName, @RequestParam(value = "quantity", required = false) Long quantity, @RequestParam(value = "pricePreOne", required = false) Long pricePreOne, @RequestParam(value = "categoryId", required = false)Long categoryId) {
-        ProductDto product = productService.updateById(id, productName, pricePreOne, quantity, categoryId);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable(value = "id") Long id,
+                                                    @RequestParam(value = "productName", required = false) String productName,
+                                                    @RequestParam(value = "quantity", required = false) Long quantity,
+                                                    @RequestParam(value = "pricePerOne", required = false) Long pricePreOne,
+                                                    @RequestParam(value = "categoryId", required = false)Long categoryId) {
+        ProductDto productDto = productService.updateById(id, productName, pricePreOne, quantity, categoryId);
+        return ResponseEntity.ok(productDto);
     }
 
     @DeleteMapping("/{id}")

@@ -2,7 +2,7 @@ package com.example.learningspringboot.controller;
 
 import com.example.learningspringboot.dto.OrderItemCreateDto;
 import com.example.learningspringboot.dto.OrderItemDto;
-import com.example.learningspringboot.model.OrderItem;
+import com.example.learningspringboot.dto.OrderItemUpdateDto;
 import com.example.learningspringboot.service.OrderItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,14 +32,14 @@ public class OrderItemController {
 
     @PostMapping
     public ResponseEntity<OrderItemDto> createOrderItem(@RequestBody @Valid OrderItemCreateDto dto) {
-        OrderItemDto orderItem = orderItemService.createOrderItem(dto);
-        return new ResponseEntity<>(orderItem, HttpStatus.CREATED);
+        OrderItemDto orderItemDto = orderItemService.createOrderItem(dto);
+        return new ResponseEntity<>(orderItemDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderItem> updateOrderItem(@PathVariable(value = "id") Long id, @RequestParam(value = "orderId", required = false) Long orderId, @RequestParam(value = "productId", required = false) Long productId, @RequestParam(value = "quantity", required = false) Long quantity) {
-        OrderItem orderItem = orderItemService.updateOrderItem(id, orderId, productId, quantity);
-        return ResponseEntity.ok(orderItem);
+    public ResponseEntity<OrderItemDto> updateOrderItem(@PathVariable(value = "id") Long id,@RequestBody @Valid OrderItemUpdateDto dto) {
+        OrderItemDto orderItemDto = orderItemService.updateOrderItem(id, dto);
+        return ResponseEntity.ok(orderItemDto);
     }
 
     @DeleteMapping("/{id}")

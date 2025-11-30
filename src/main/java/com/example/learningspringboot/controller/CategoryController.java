@@ -2,7 +2,6 @@ package com.example.learningspringboot.controller;
 
 import com.example.learningspringboot.dto.CategoryCreateDto;
 import com.example.learningspringboot.dto.CategoryDto;
-import com.example.learningspringboot.model.Category;
 import com.example.learningspringboot.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +25,8 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDto> getById(@PathVariable("id") Long id) {
-        CategoryDto categoryById = categoryService.findCategoryDtoById(id);
-        return ResponseEntity.ok(categoryById);
+        CategoryDto categoryDto = categoryService.findCategoryDtoById(id);
+        return ResponseEntity.ok(categoryDto);
     }
 
     @PostMapping
@@ -37,9 +36,9 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<Category> updateCategory(@PathVariable(value = "id") Long id, @RequestParam(value = "name") String name) {
-        Category categoryById = categoryService.updateById(id, name);
-        return ResponseEntity.ok(categoryById);
+    ResponseEntity<CategoryDto> updateCategory(@PathVariable(value = "id") Long id, @RequestParam(value = "name") String name) {
+        CategoryDto categoryDto = categoryService.updateById(id, name);
+        return ResponseEntity.ok(categoryDto);
     }
 
     @DeleteMapping("/{id}")

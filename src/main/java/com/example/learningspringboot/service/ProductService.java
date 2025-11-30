@@ -59,8 +59,6 @@ public class ProductService {
 
     public ProductDto updateById(Long productId, String productName, Long pricePerOne, Long quantity, Long categoryId) {
         Product product = findById(productId);
-        checkQuantity(quantity);
-        checkPrice(pricePerOne);
 
         productMapper.toUpdateEntity(product, productName, pricePerOne, quantity, categoryId);
         productRepository.save(product);

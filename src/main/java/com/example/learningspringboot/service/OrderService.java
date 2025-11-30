@@ -45,8 +45,8 @@ public class OrderService {
         User user = userService.findById(dto.getUserId());
         Order order = orderMapper.toEntity(dto, user, LocalDateTime.now());
 
-         orderRepository.save(order);
-         return orderMapper.toDto(order);
+        orderRepository.save(order);
+        return orderMapper.toDto(order);
     }
 
 
@@ -56,10 +56,16 @@ public class OrderService {
         orderRepository.delete(order);
     }
 
-    public OrderDto updateById(Long orderId, Long price) {
-        OrderDto orderDto = findOrderDtoById(orderId);
-        orderDto.setPrice(price);
-        return orderDto;
+    public OrderDto updateById(Long orderId, Long price, Long userId) {
+        Order order = findById(orderId);
+
+        User user = null;
+        if (userId != null) {
+            user = userService.findById(userId);
+        }
+        orderMapper.toUpdateEntity(order, price, user);
+        orderRepository.save(order);
+        return orderMapper.toDto(order);
     }
 
 
