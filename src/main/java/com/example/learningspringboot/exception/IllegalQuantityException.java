@@ -1,6 +1,6 @@
 package com.example.learningspringboot.exception;
 
-public class IllegalQuantityException extends RuntimeException {
+public class IllegalQuantityException extends BadRequestException {
     public IllegalQuantityException(String message) {
         super(message);
     }

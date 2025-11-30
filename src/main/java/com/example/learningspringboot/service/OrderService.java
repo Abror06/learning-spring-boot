@@ -2,7 +2,7 @@ package com.example.learningspringboot.service;
 
 import com.example.learningspringboot.dto.OrderCreateDto;
 import com.example.learningspringboot.dto.OrderDto;
-import com.example.learningspringboot.exception.OrderNotFoundExeption;
+import com.example.learningspringboot.exception.OrderNotFoundException;
 import com.example.learningspringboot.mapper.OrderMapper;
 import com.example.learningspringboot.model.Order;
 import com.example.learningspringboot.model.User;
@@ -33,7 +33,7 @@ public class OrderService {
         if (optionalOrder.isPresent()) {
             return optionalOrder.get();
         }
-        throw new OrderNotFoundExeption("Order not found");
+        throw new OrderNotFoundException("Order not found");
     }
 
     public OrderDto findOrderDtoById(Long id) {
