@@ -1,5 +1,6 @@
 package com.example.learningspringboot.model;
 
+import com.example.learningspringboot.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,4 +28,9 @@ public class Payment {
 
     @Column(name = "amount")
     private Long amount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private PaymentStatus status = PaymentStatus.PENDING;
+    ;
 }

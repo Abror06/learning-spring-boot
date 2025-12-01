@@ -1,5 +1,6 @@
 package com.example.learningspringboot.dto;
 
+import com.example.learningspringboot.enums.PaymentStatus;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -21,4 +22,6 @@ public class PaymentCreateDto {
     @NotNull
     @Positive
     private Long amount;
+
+    private PaymentStatus status;
 }

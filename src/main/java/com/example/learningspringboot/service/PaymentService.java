@@ -3,6 +3,7 @@ package com.example.learningspringboot.service;
 import com.example.learningspringboot.dto.PaymentCreateDto;
 import com.example.learningspringboot.dto.PaymentDto;
 import com.example.learningspringboot.dto.PaymentUpdateDto;
+import com.example.learningspringboot.enums.PaymentStatus;
 import com.example.learningspringboot.exception.*;
 import com.example.learningspringboot.mapper.PaymentMapper;
 import com.example.learningspringboot.model.Order;
@@ -55,7 +56,7 @@ public class PaymentService {
 
     public PaymentDto updateById(Long id, PaymentUpdateDto dto) {
         Payment payment = findById(id);
-        return paymentMapper.toDto(persistToUpdate(payment, dto.getUserId(), dto.getAmount()));
+        return paymentMapper.toDto(persistToUpdate(payment, dto.getUserId(), dto.getAmount(), dto.getStatus()));
     }
     private Payment persist(Payment payment, Long userId, Long orderId, Long amount) {
 
@@ -67,13 +68,13 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    private Payment persistToUpdate(Payment payment, Long userId, Long amount) {
+    private Payment persistToUpdate(Payment payment, Long userId, Long amount, PaymentStatus status) {
         User user = null;
 
         if (userId != null) {
             user = userService.findById(userId);
         }
-        paymentMapper.toUpdateEntity(payment, amount, user);
+        paymentMapper.toUpdateEntity(payment, amount, user, status);
         return paymentRepository.save(payment);
     }
 }
