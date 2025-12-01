@@ -3,6 +3,7 @@ package com.example.learningspringboot.mapper;
 
 import com.example.learningspringboot.dto.UserCreateDto;
 import com.example.learningspringboot.dto.UserDto;
+import com.example.learningspringboot.enums.UserStatus;
 import com.example.learningspringboot.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -34,5 +35,6 @@ public interface UserMapper {
 
     @Mapping(target = "fullName", source = "fullName")
     @Mapping(target = "phone", source = "phone")
-    void toUpdateEntity(@MappingTarget User user, Long id, String fullName, String phone);
+    @Mapping(target = "status", source = "status")
+    void toUpdateEntity(@MappingTarget User user, Long id, String fullName, String phone, UserStatus status);
 }

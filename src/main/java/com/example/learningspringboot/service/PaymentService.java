@@ -58,6 +58,7 @@ public class PaymentService {
         Payment payment = findById(id);
         return paymentMapper.toDto(persistToUpdate(payment, dto.getUserId(), dto.getAmount(), dto.getStatus()));
     }
+
     private Payment persist(Payment payment, Long userId, Long orderId, Long amount) {
 
         User user = userService.findById(userId);

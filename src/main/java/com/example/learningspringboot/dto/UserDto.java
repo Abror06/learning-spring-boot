@@ -1,6 +1,7 @@
 package com.example.learningspringboot.dto;
 
 
+import com.example.learningspringboot.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,7 @@ public class UserDto {
     private String phone;
 
     private LocalDateTime createdAt;
+
+    private UserStatus status;
+
 }

@@ -2,6 +2,7 @@ package com.example.learningspringboot.service;
 
 import com.example.learningspringboot.dto.UserCreateDto;
 import com.example.learningspringboot.dto.UserDto;
+import com.example.learningspringboot.enums.UserStatus;
 import com.example.learningspringboot.exception.PhoneUniqueException;
 import com.example.learningspringboot.exception.UserNotFoundException;
 import com.example.learningspringboot.mapper.UserMapper;
@@ -55,10 +56,10 @@ public class UserService {
         usersRepository.delete(user);
     }
 
-    public UserDto updateById(Long id, String fullName, String phone) {
+    public UserDto updateById(Long id, String fullName, String phone, UserStatus status) {
         User user = findById(id);
 
-        userMapper.toUpdateEntity(user, id, fullName, phone);
+        userMapper.toUpdateEntity(user, id, fullName, phone, status);
         usersRepository.save(user);
         return userMapper.toDto(user);
     }

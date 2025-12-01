@@ -1,10 +1,12 @@
 package com.example.learningspringboot.model;
 
+import com.example.learningspringboot.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
 
 import java.time.LocalDateTime;
+
 @Data
 @Entity
 @Table(name = "users")
@@ -17,9 +19,13 @@ public class User {
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "phone" , unique = true)
+    @Column(name = "phone", unique = true)
     private String phone;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private UserStatus status = UserStatus.ACTIVE;
 }
