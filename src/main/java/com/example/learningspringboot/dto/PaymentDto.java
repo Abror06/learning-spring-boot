@@ -1,5 +1,6 @@
 package com.example.learningspringboot.dto;
 
+import com.example.learningspringboot.enums.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,6 @@ public class PaymentDto {
     private LocalDateTime date;
 
     private Long amount;
+
+    private PaymentStatus status;
 }

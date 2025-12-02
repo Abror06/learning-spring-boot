@@ -4,7 +4,6 @@ import com.example.learningspringboot.dto.BaseModifyDto;
 import com.example.learningspringboot.dto.OrderItemCreateDto;
 import com.example.learningspringboot.dto.OrderItemDto;
 import com.example.learningspringboot.dto.OrderItemUpdateDto;
-import com.example.learningspringboot.exception.IllegalQuantityException;
 import com.example.learningspringboot.exception.OrderItemNotFoundException;
 import com.example.learningspringboot.mapper.OrderItemMapper;
 import com.example.learningspringboot.model.Order;

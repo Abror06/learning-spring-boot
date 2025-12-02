@@ -1,6 +1,7 @@
 package com.example.learningspringboot.mapper;
 
 import com.example.learningspringboot.dto.*;
+import com.example.learningspringboot.enums.PaymentStatus;
 import com.example.learningspringboot.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -22,6 +23,7 @@ public interface PaymentMapper {
     @Mapping(target = "orderId", source = "order.id")
     @Mapping(target = "date", source = "date")
     @Mapping(target = "amount", source = "amount")
+    @Mapping(target = "status", source = "status")
     PaymentDto toDto(Payment payment);
 
     List<PaymentDto> toDto(List<Payment> payments);
@@ -36,6 +38,7 @@ public interface PaymentMapper {
     @Mapping(target = "user", source = "user")
     @Mapping(target = "amount", source = "amount")
     @Mapping(target = "id", ignore = true)
-    void toUpdateEntity(@MappingTarget Payment payment, Long amount, User user);
+    @Mapping(target = "status", source = "status")
+    void toUpdateEntity(@MappingTarget Payment payment, Long amount, User user, PaymentStatus status);
 
 }

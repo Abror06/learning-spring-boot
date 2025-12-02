@@ -2,6 +2,7 @@ package com.example.learningspringboot.controller;
 
 import com.example.learningspringboot.dto.UserCreateDto;
 import com.example.learningspringboot.dto.UserDto;
+import com.example.learningspringboot.enums.UserStatus;
 import com.example.learningspringboot.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable(value = "id") Long id, @RequestParam(value = "fullName", required = false) String fullName, @RequestParam(value = "phone", required = false) String phone) {
-        UserDto userDto = userService.updateById(id, fullName, phone);
+    public ResponseEntity<UserDto> updateUser(@PathVariable(value = "id") Long id, @RequestParam(value = "fullName", required = false) String fullName, @RequestParam(value = "phone", required = false) String phone, @RequestParam(value = "status", required = false) UserStatus status) {
+        UserDto userDto = userService.updateById(id, fullName, phone, status);
         return ResponseEntity.ok(userDto);
     }
 
