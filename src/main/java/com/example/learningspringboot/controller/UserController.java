@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable(value = "id") Long id, @RequestParam(value = "fullName", required = false) String fullName, @RequestParam(value = "phone", required = false) String phone, @RequestParam(value = "status", required = false)UserStatus status) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable(value = "id") Long id, @RequestParam(value = "fullName", required = false) String fullName, @RequestParam(value = "phone", required = false) String phone, @RequestParam(value = "status", required = false) UserStatus status) {
         UserDto userDto = userService.updateById(id, fullName, phone, status);
         return ResponseEntity.ok(userDto);
     }
