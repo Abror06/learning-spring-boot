@@ -31,6 +31,7 @@ public interface UserMapper {
     @Mapping(target = "fullName", source = "dto.fullName")
     @Mapping(target = "phone", source = "dto.phone")
     @Mapping(target = "createdAt", source = "localDateTime")
+    @Mapping(target = "status", constant = "ACTIVE")
     User toEntity(UserCreateDto dto, LocalDateTime localDateTime);
 
     @Mapping(target = "fullName", source = "fullName")

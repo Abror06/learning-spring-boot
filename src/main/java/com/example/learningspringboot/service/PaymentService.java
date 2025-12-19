@@ -11,6 +11,8 @@ import com.example.learningspringboot.model.Payment;
 import com.example.learningspringboot.model.User;
 import com.example.learningspringboot.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,9 +28,11 @@ public class PaymentService {
     private final PaymentMapper paymentMapper;
 
 
-    public List<PaymentDto> findAll() {
-        List<Payment> allPayments = paymentRepository.findAll();
-        return paymentMapper.toDto(allPayments);
+    public Page<PaymentDto> findAll(Pageable pageable) {
+        Page<Payment> paymentPage = paymentRepository.findAll(pageable);
+
+        Page<PaymentDto> dtoPage = paymentPage.map(paymentMapper::toDto);
+        return dtoPage;
     }
 
     public Payment findById(Long id) {

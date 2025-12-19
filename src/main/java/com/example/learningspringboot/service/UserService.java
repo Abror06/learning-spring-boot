@@ -9,6 +9,8 @@ import com.example.learningspringboot.mapper.UserMapper;
 import com.example.learningspringboot.model.User;
 import com.example.learningspringboot.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,9 +25,11 @@ public class UserService {
     private final UsersRepository usersRepository;
     private final UserMapper userMapper;
 
-    public List<UserDto> findAll() {
-        List<User> allUsers = usersRepository.findAll();
-        return userMapper.toDto(allUsers);
+    public Page<UserDto> findAll(Pageable pageable) {
+        Page<User> userPage = usersRepository.findAll(pageable);
+
+        Page<UserDto> dtoPage = userPage.map(userMapper::toDto);
+        return dtoPage;
     }
 
     public User findById(Long id) {

@@ -9,6 +9,8 @@ import com.example.learningspringboot.model.User;
 import com.example.learningspringboot.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -23,9 +25,11 @@ public class OrderService {
     private final UserService userService;
     private final OrderMapper orderMapper;
 
-    public List<OrderDto> findAll() {
-        List<Order> allOrders = orderRepository.findAll();
-        return orderMapper.toDto(allOrders);
+    public Page<OrderDto> findAll(Pageable pageable) {
+        Page<Order> allOrders = orderRepository.findAll(pageable);
+
+        Page<OrderDto> dtoPage = allOrders.map(orderMapper::toDto);
+        return dtoPage;
     }
 
     public Order findById(Long id) {

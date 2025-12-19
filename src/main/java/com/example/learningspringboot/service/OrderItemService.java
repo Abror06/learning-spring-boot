@@ -11,6 +11,8 @@ import com.example.learningspringboot.model.OrderItem;
 import com.example.learningspringboot.model.Product;
 import com.example.learningspringboot.repository.OrderItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,9 +26,11 @@ public class OrderItemService {
     private final OrderService orderService;
     private final OrderItemMapper orderItemMapper;
 
-    public List<OrderItemDto> findAll() {
-        List<OrderItem> allOrderItems = orderItemRepository.findAll();
-        return orderItemMapper.toDto(allOrderItems);
+    public Page<OrderItemDto> findAll(Pageable pageable) {
+        Page<OrderItem> allOrderItems = orderItemRepository.findAll(pageable);
+
+        Page<OrderItemDto> dtoPage = allOrderItems.map(orderItemMapper::toDto);
+        return dtoPage;
     }
 
     public OrderItem findById(Long id) {

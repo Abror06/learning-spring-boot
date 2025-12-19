@@ -6,6 +6,8 @@ import com.example.learningspringboot.dto.OrderItemUpdateDto;
 import com.example.learningspringboot.service.OrderItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +21,8 @@ public class OrderItemController {
     private final OrderItemService orderItemService;
 
     @GetMapping
-    public ResponseEntity<List<OrderItemDto>> getAll() {
-        List<OrderItemDto> allUsers = orderItemService.findAll();
+    public ResponseEntity<Page<OrderItemDto>> getAll(Pageable pageable) {
+        Page<OrderItemDto> allUsers = orderItemService.findAll(pageable);
         return ResponseEntity.ok(allUsers);
     }
 
