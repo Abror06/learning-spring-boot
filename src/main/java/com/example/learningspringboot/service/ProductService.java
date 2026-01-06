@@ -5,11 +5,14 @@ import com.example.learningspringboot.dto.ProductDto;
 import com.example.learningspringboot.exception.IllegalPriceException;
 import com.example.learningspringboot.exception.IllegalQuantityException;
 import com.example.learningspringboot.exception.ProductNotFoundException;
+import com.example.learningspringboot.mapper.CategoryMapper;
 import com.example.learningspringboot.mapper.ProductMapper;
 import com.example.learningspringboot.model.Category;
 import com.example.learningspringboot.model.Product;
 import com.example.learningspringboot.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,9 +25,11 @@ public class ProductService {
     private final CategoryService categoryService;
     private final ProductMapper productMapper;
 
-    public List<ProductDto> findAll() {
-        List<Product> allProducts = productRepository.findAll();
-        return productMapper.toDto(allProducts);
+    public Page<ProductDto> findAll(Pageable pageable) {
+        Page<Product> productPage = productRepository.findAll(pageable);
+
+        Page<ProductDto> dtoPage=productPage.map(productMapper::toDto);
+        return dtoPage;
     }
 
     public Product findById(Long id) {

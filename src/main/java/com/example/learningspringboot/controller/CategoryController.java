@@ -5,11 +5,12 @@ import com.example.learningspringboot.dto.CategoryDto;
 import com.example.learningspringboot.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +19,8 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> getAll() {
-        List<CategoryDto> categoryList = categoryService.findAll();
+    public ResponseEntity<Page<CategoryDto>> getAll(Pageable pageable) {
+        Page<CategoryDto> categoryList = categoryService.findAll(pageable);
         return ResponseEntity.ok(categoryList);
     }
 

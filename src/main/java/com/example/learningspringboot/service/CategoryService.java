@@ -8,20 +8,29 @@ import com.example.learningspringboot.mapper.CategoryMapper;
 import com.example.learningspringboot.model.Category;
 import com.example.learningspringboot.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
-    public List<CategoryDto> findAll() {
-        List<Category> allCategories = categoryRepository.findAll();
-        return categoryMapper.toDto(allCategories);
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
+        this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
+    }
+
+    public Page<CategoryDto> findAll(Pageable pageable) {
+        Page<Category> categoryPage = categoryRepository.findAll(pageable);
+
+        Page<CategoryDto> dtoPage = categoryPage.map(categoryMapper::toDto);
+        return dtoPage;
     }
 
     public Category findById(Long categoryId) {

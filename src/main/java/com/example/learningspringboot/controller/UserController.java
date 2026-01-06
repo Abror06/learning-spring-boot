@@ -6,6 +6,8 @@ import com.example.learningspringboot.enums.UserStatus;
 import com.example.learningspringboot.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +21,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAll() {
-        List<UserDto> allUsers = userService.findAll();
-        return ResponseEntity.ok(allUsers);
+    public ResponseEntity<Page<UserDto>> getAll(Pageable pageable) {
+        Page<UserDto> userDtoPage = userService.findAll(pageable);
+        return ResponseEntity.ok(userDtoPage);
     }
 
     @GetMapping("/{id}")

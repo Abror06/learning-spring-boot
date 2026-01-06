@@ -32,6 +32,7 @@ public interface PaymentMapper {
     @Mapping(target = "order", source = "order")
     @Mapping(target = "amount", source = "amount")
     @Mapping(target = "date", source = "localDateTime")
+    @Mapping(target = "status", constant = "PENDING")
     @Mapping(target = "id", ignore = true)
     void toEntity(@MappingTarget Payment payment, Long amount, User user, Order order, LocalDateTime localDateTime);
 

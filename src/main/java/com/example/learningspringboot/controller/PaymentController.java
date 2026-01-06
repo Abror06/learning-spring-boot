@@ -8,6 +8,8 @@ import com.example.learningspringboot.model.Payment;
 import com.example.learningspringboot.service.PaymentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +23,8 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @GetMapping
-    public ResponseEntity<List<PaymentDto>> getALl() {
-        List<PaymentDto> payments = paymentService.findAll();
+    public ResponseEntity<Page<PaymentDto>> getALl(Pageable pageable) {
+        Page<PaymentDto> payments = paymentService.findAll(pageable);
         return ResponseEntity.ok(payments);
     }
 

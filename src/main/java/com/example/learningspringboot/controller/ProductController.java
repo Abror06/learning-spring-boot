@@ -5,6 +5,8 @@ import com.example.learningspringboot.dto.ProductDto;
 import com.example.learningspringboot.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getAll() {
-        List<ProductDto> allProduct = productService.findAll();
+    public ResponseEntity<Page<ProductDto>> getAll(Pageable pageable) {
+        Page<ProductDto> allProduct = productService.findAll(pageable);
         return ResponseEntity.ok(allProduct);
     }
 
